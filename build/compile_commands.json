@@ -1,0 +1,26 @@
+[
+{
+  "directory": "/home/alezito/Documents/Escuela/Hydro_Objetos/build",
+  "command": "/usr/sbin/g++   -g -o CMakeFiles/Objetos.dir/src/main.cpp.o -c /home/alezito/Documents/Escuela/Hydro_Objetos/src/main.cpp",
+  "file": "/home/alezito/Documents/Escuela/Hydro_Objetos/src/main.cpp",
+  "output": "CMakeFiles/Objetos.dir/src/main.cpp.o"
+},
+{
+  "directory": "/home/alezito/Documents/Escuela/Hydro_Objetos/build",
+  "command": "/usr/sbin/g++   -g -o CMakeFiles/Objetos.dir/src/GameObject.cpp.o -c /home/alezito/Documents/Escuela/Hydro_Objetos/src/GameObject.cpp",
+  "file": "/home/alezito/Documents/Escuela/Hydro_Objetos/src/GameObject.cpp",
+  "output": "CMakeFiles/Objetos.dir/src/GameObject.cpp.o"
+},
+{
+  "directory": "/home/alezito/Documents/Escuela/Hydro_Objetos/build",
+  "command": "/usr/sbin/g++   -g -o CMakeFiles/Objetos.dir/src/Component.cpp.o -c /home/alezito/Documents/Escuela/Hydro_Objetos/src/Component.cpp",
+  "file": "/home/alezito/Documents/Escuela/Hydro_Objetos/src/Component.cpp",
+  "output": "CMakeFiles/Objetos.dir/src/Component.cpp.o"
+},
+{
+  "directory": "/home/alezito/Documents/Escuela/Hydro_Objetos/build",
+  "command": "/usr/sbin/g++   -g -o CMakeFiles/Objetos.dir/src/Scene.cpp.o -c /home/alezito/Documents/Escuela/Hydro_Objetos/src/Scene.cpp",
+  "file": "/home/alezito/Documents/Escuela/Hydro_Objetos/src/Scene.cpp",
+  "output": "CMakeFiles/Objetos.dir/src/Scene.cpp.o"
+}
+]

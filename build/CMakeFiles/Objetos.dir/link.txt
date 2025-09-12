@@ -1,0 +1,1 @@
+/usr/sbin/g++ -g -Wl,--dependency-file=CMakeFiles/Objetos.dir/link.d CMakeFiles/Objetos.dir/src/main.cpp.o CMakeFiles/Objetos.dir/src/GameObject.cpp.o CMakeFiles/Objetos.dir/src/Component.cpp.o CMakeFiles/Objetos.dir/src/Scene.cpp.o -o Objetos

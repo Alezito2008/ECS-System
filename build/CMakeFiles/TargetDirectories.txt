@@ -1,0 +1,3 @@
+/home/alezito/Documents/Escuela/Hydro_Objetos/build/CMakeFiles/Objetos.dir
+/home/alezito/Documents/Escuela/Hydro_Objetos/build/CMakeFiles/edit_cache.dir
+/home/alezito/Documents/Escuela/Hydro_Objetos/build/CMakeFiles/rebuild_cache.dir
