@@ -4,7 +4,7 @@ unsigned int Component::m_NextID = 0;
 
 Component::Component(GameObject* parent) {
     m_ID = m_NextID++;
-    m_GameObject = parent;
+    m_Owner = parent;
 }
 
 void Component::Start() {};
@@ -21,5 +21,5 @@ void Component::Destroy() {
 }
 
 void Component::SetParent(GameObject* newParent) {
-    m_GameObject = newParent;
+    m_Owner = newParent;
 }

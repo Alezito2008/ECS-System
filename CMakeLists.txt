@@ -9,3 +9,9 @@ add_executable(Objetos
     src/Component.cpp
         src/Scene.cpp
 )
+
+find_package(glm REQUIRED)
+
+target_link_libraries(Objetos PRIVATE glm::glm)
+target_include_directories(Objetos PRIVATE src)
+

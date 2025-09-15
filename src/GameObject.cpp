@@ -2,7 +2,7 @@
 
 unsigned int GameObject::s_NextID = 0;
 
-GameObject::GameObject(const std::string& name) {
+GameObject::GameObject(const std::string& name) : transform(this) {
     m_ID = ++s_NextID;
 
     if (name.empty()) {

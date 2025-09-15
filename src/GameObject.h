@@ -7,11 +7,14 @@
 
 #include "Component.h"
 #include "ComponentManager.h"
+#include "Components/Transform.h"
 
 class GameObject {
     public:
         GameObject(const std::string& name = "");
         ~GameObject() = default;
+
+        Transform transform;
 
         inline unsigned int GetID() const {
             return m_ID;
@@ -50,6 +53,10 @@ class GameObject {
             return m_Childs;
         };
 
+        inline const std::vector<GameObject*>& GetChilds() const {
+            return m_Childs;
+        };
+
         inline GameObject* FindChild(const std::string& name) const {
             for (const auto& child : m_Childs) {
                 if (child->GetName() == name) {
@@ -60,7 +67,7 @@ class GameObject {
         };
 
         inline GameObject* FindChild(const unsigned int index) const {
-            if (m_Childs[index]) {
+            if (index < m_Childs.size()) {
                 return m_Childs[index];
             }
             return nullptr;
@@ -88,6 +95,7 @@ class GameObject {
 inline std::ostream& operator<<(std::ostream& os, const GameObject& obj) {
     os << "Name: " << obj.GetName() <<
         "\nID: " << obj.GetID() <<
-            "\nParent: " << (obj.GetParent() ? obj.GetParent()->GetName() : "null") << std::endl;
+        "\nParent: " << (obj.GetParent() ? obj.GetParent()->GetName() : "null") <<
+        "\nnChilds: " << obj.GetChilds().size() << std::endl;
     return os;
 }

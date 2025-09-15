@@ -26,5 +26,7 @@ public:
         static unsigned int m_NextID;
         unsigned int m_ID;
         bool m_IsActive = true;
-        GameObject* m_GameObject;
+
+    protected:
+        GameObject* m_Owner;
 };
