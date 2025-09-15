@@ -2,6 +2,7 @@
 
 #include "ComponentManager.h"
 #include "GameObject.h"
+#include "Scene.h"
 
 class Transform : public Component {
 public:
@@ -26,25 +27,20 @@ public:
 };
 
 int main() {
-    auto object1 = std::make_unique<GameObject>();
-    auto object2 = std::make_unique<GameObject>();
+    Scene scene;
 
-    object1->AddComponent<Transform>();
+    GameObject& cubo = scene.CreateGameObject("Cubo");
+    GameObject& circulo = scene.CreateGameObject("Circulo");
 
-    // Buscar y loguear ANTES de borrar
-    if (auto transform = object1->FindComponent<Transform>()) {
-        std::cout << transform->GetName() << std::endl;
+    for (const auto& obj : scene.GetGameObjects()) {
+        std::cout << *obj << std::endl;
     }
 
-    // Ahora borrar
-    object1->RemoveComponent<Transform>();
+    cubo.AddChild(circulo);
 
-    // Buscar otra vez para ver que ya no está
-    auto afterDelete = object1->FindComponent<Transform>();
-    std::cout << (afterDelete ? afterDelete->GetName() : "null") << std::endl;
+    std::cout << "-------------------------------" << std::endl;
 
-    object1->AddChild(std::move(object2));
-
-    std::cout << *object1 << std::endl;
-    std::cout << *(object1->FindFirstChild()) << std::endl;
+    for (const auto& obj : scene.GetGameObjects()) {
+        std::cout << *obj << std::endl;
+    }
 }

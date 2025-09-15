@@ -46,14 +46,14 @@ class GameObject {
             return m_Parent;
         };
 
-        inline std::vector<std::unique_ptr<GameObject>>& GetChilds() {
+        inline std::vector<GameObject*>& GetChilds() {
             return m_Childs;
         };
 
         inline GameObject* FindChild(const std::string& name) const {
             for (const auto& child : m_Childs) {
                 if (child->GetName() == name) {
-                    return child.get();
+                    return child;
                 }
             }
             return nullptr;
@@ -61,7 +61,7 @@ class GameObject {
 
         inline GameObject* FindChild(const unsigned int index) const {
             if (m_Childs[index]) {
-                return m_Childs[index].get();
+                return m_Childs[index];
             }
             return nullptr;
         };
@@ -70,9 +70,9 @@ class GameObject {
             return FindChild(0);
         }
 
-        void AddChild(std::unique_ptr<GameObject> child) {
-            child->m_Parent = this;
-            m_Childs.push_back(std::move(child));
+        void AddChild(GameObject& child) {
+            child.m_Parent = this;
+            m_Childs.push_back(&child);
         };
     private:
         unsigned int m_ID;
@@ -81,7 +81,7 @@ class GameObject {
         std::string m_Name;
 
         std::vector<std::unique_ptr<Component>> m_Components;
-        std::vector<std::unique_ptr<GameObject>> m_Childs;
+        std::vector<GameObject*> m_Childs;
         GameObject* m_Parent = nullptr;
 };
 
