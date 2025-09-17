@@ -7,7 +7,8 @@ add_executable(Objetos
     src/main.cpp
     src/GameObject.cpp
     src/Component.cpp
-        src/Scene.cpp
+    src/Scene.cpp
+    src/Components/Transform.cpp
 )
 
 find_package(glm REQUIRED)

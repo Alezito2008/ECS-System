@@ -9,12 +9,14 @@
 #include "ComponentManager.h"
 #include "Components/Transform.h"
 
+class Transform;
+
 class GameObject {
     public:
         GameObject(const std::string& name = "");
         ~GameObject() = default;
 
-        Transform transform;
+        std::unique_ptr<Transform> transform;
 
         inline unsigned int GetID() const {
             return m_ID;
