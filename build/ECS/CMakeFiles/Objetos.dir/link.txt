@@ -1,1 +1,0 @@
-/usr/sbin/g++ -g -Wl,--dependency-file=CMakeFiles/Objetos.dir/link.d CMakeFiles/Objetos.dir/src/main.cpp.o -o Objetos  libECS.a /usr/lib/libglm.a
