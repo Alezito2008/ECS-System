@@ -10,10 +10,7 @@ add_library(ECS STATIC
     src/Components/Transform.cpp
 )
 
-target_include_directories(ECS
-PUBLIC ${PROJECT_SOURCE_DIR}/include/ECS
-PRIVATE ${PROJECT_SOURCE_DIR}/private
-)
+target_include_directories(ECS PUBLIC ${PROJECT_SOURCE_DIR}/include/ECS)
 
 find_package(glm REQUIRED)
 target_link_libraries(ECS PRIVATE glm::glm)

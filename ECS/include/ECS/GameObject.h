@@ -6,8 +6,8 @@
 #include <iostream>
 
 #include "Component.h"
-#include "ComponentManager.h"
 #include "Components/Transform.h"
+#include "ComponentManager.h"
 
 class Transform;
 
