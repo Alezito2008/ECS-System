@@ -1,0 +1,2 @@
+/usr/sbin/ar qc libECS.a CMakeFiles/ECS.dir/src/GameObject.cpp.o CMakeFiles/ECS.dir/src/Component.cpp.o CMakeFiles/ECS.dir/src/Scene.cpp.o CMakeFiles/ECS.dir/src/Components/Transform.cpp.o
+/usr/sbin/ranlib libECS.a

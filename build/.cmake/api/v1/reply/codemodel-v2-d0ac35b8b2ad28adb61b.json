@@ -1,0 +1,96 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.30"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "ECS",
+					"jsonFile" : "directory-ECS-Debug-b70f5e6f45215d0fccc0.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.30"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "ECS",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Project"
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "ECS",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "ECS::@1cec2cb8fdc32e061be0",
+					"jsonFile" : "target-ECS-Debug-5b37073ecd73691d05cb.json",
+					"name" : "ECS",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "Objetos::@1cec2cb8fdc32e061be0",
+					"jsonFile" : "target-Objetos-Debug-f03a91aca96c18d61b4a.json",
+					"name" : "Objetos",
+					"projectIndex" : 1
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/alezito/Documents/Escuela/Hydro_Objetos/build",
+		"source" : "/home/alezito/Documents/Escuela/Hydro_Objetos"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 8
+	}
+}
