@@ -3,7 +3,12 @@ project(Editor)
 
 add_executable(EditorMain
     src/main.cpp
+    src/Interface.cpp
 )
+
+target_include_directories(EditorMain PRIVATE ${PROJECT_SOURCE_DIR}/src)
+
+# Librerias y demás
 
 target_include_directories(EditorMain PRIVATE ${PROJECT_SOURCE_DIR}/../ECS/include)
 

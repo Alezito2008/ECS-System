@@ -3,9 +3,7 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
-#include "ECS/GameObject.h"
-#include "ECS/Scene.h"
-#include "ECS/Components/Transform.h"
+#include "Interface.h"
 
 #include <iostream>
 
@@ -30,13 +28,16 @@ int main() {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
+
+    io.IniFilename = nullptr;
+
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
-
 
     // ---------------- Main Loop ----------------
     while (!glfwWindowShouldClose(window)) {
@@ -47,9 +48,7 @@ int main() {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        ImGui::Begin("Holiiiss");
-        ImGui::Text("Holalalaalsl");
-        ImGui::End();
+        ShowInterface();
 
         // Render ImGui
         ImGui::Render();
@@ -60,6 +59,14 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        // Soporte para viewports
+        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+            GLFWwindow* backup_current_context = glfwGetCurrentContext();
+            ImGui::UpdatePlatformWindows();
+            ImGui::RenderPlatformWindowsDefault();
+            glfwMakeContextCurrent(backup_current_context);
+        }
 
         glfwSwapBuffers(window);
     }
