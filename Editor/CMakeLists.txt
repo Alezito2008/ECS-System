@@ -4,6 +4,7 @@ project(Editor)
 add_executable(EditorMain
     src/main.cpp
     src/Interface.cpp
+    src/DockLayout.cpp
 )
 
 target_include_directories(EditorMain PRIVATE ${PROJECT_SOURCE_DIR}/src)
