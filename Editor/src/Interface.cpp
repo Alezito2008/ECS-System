@@ -1,6 +1,6 @@
 #include "Interface.h"
-
 #include "imgui_internal.h"
+#include "console/console.h"
 
 #include <iostream>
 
@@ -16,9 +16,7 @@ void ShowInterface() {
 
     layout.Setup(splitList);
 
-    ImGui::Begin("Console");
-    ImGui::Text("> Console");
-    ImGui::End();
+    Console::Render();
 
     ImGui::Begin("Tree");
     ImGui::Text("Es un tree");

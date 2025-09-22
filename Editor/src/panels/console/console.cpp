@@ -1,0 +1,88 @@
+#include "imgui.h"
+#include "console/console.h"
+
+#include <ctime>
+
+static char inputBuffer[512];
+static ImGuiTextBuffer logBuffer;
+static ImGuiTextFilter filter;
+static bool autoScroll = true;
+static bool scrollToBottom = false;
+
+static std::string LogTypeToString(LOGTYPE type) {
+    switch (type) {
+        case LOGTYPE::DEBUG:    return "DEBUG";
+        case LOGTYPE::INFO:     return "INFO";
+        case LOGTYPE::WARNING:  return "WARNING";
+        case LOGTYPE::ERROR:    return "ERROR";
+    }
+    return "NULL";
+}
+
+static std::string GetCurrentTimeString() {
+    std::time_t now = std::time(nullptr);
+    char buffer[20];
+    std::strftime(buffer, sizeof(buffer), "%H:%M:%S", std::localtime(&now));
+    return std::string(buffer);
+}
+
+void Console::AddLog(LOGTYPE type, const std::string& text) {
+    logBuffer.appendf("[%s] [%s] %s\n", GetCurrentTimeString().c_str(), LogTypeToString(type).c_str(), text.c_str());
+    scrollToBottom = autoScroll;
+}
+
+void Console::Render() {
+    using namespace ImGui;
+    Begin("Console");
+
+    if (BeginTable("ConsoleTable", 2, ImGuiTableFlags_SizingStretchProp)) {
+        TableNextColumn();
+
+        if (BeginPopup("Console Options")) {
+            Checkbox("AutoScroll", &autoScroll);
+            EndPopup();
+        }
+
+        SetNextItemWidth(GetContentRegionAvail().x);
+        filter.Draw("##filter");
+        
+        TableNextColumn();
+        if (Button("Clear")) {
+            logBuffer.clear();
+        };
+        SameLine();
+        if (Button("Copy")) {
+            LogToClipboard();
+            TextUnformatted(logBuffer.begin(),logBuffer.end());
+            LogFinish();
+        };
+        SameLine();
+        if (Button("Options")) {
+            OpenPopup("Console Options");
+        };
+        EndTable();
+    }
+
+    BeginChild("LogRegion", ImVec2(0,0), true, ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_AlwaysVerticalScrollbar);
+    const char* text = logBuffer.begin();
+    const char* line_start = text;
+
+    for (const char* p = text; *p; p++) {
+        if (*p == '\n') {
+            std::string line(line_start, p - line_start);
+            if (filter.PassFilter(line.c_str())) {
+                TextUnformatted(line.c_str());
+            }
+            line_start = p + 1;
+        }
+    }
+
+    if (scrollToBottom) {
+        SetScrollHereY(1.0f);
+        scrollToBottom = false;
+    }
+
+    EndChild();
+
+    End();
+}

@@ -5,9 +5,14 @@ add_executable(EditorMain
     src/main.cpp
     src/Interface.cpp
     src/DockLayout.cpp
+    src/panels/console/console.cpp
+    src/panels/tree/tree.cpp
 )
 
-target_include_directories(EditorMain PRIVATE ${PROJECT_SOURCE_DIR}/src)
+target_include_directories(EditorMain PRIVATE
+    src/include
+    src/panels
+)
 
 # Librerias y demás
 

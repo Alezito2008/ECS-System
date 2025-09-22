@@ -25,7 +25,6 @@ public:
     ImGuiID GetNodeID(const std::string& nodeName);
 
     void Setup(const SplitList& splits);
-    void FinishSetup();
 
     void Split(const char* parentNode, ImGuiDir direction, const char* first, const char* second, float ratio);
 private:
