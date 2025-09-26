@@ -2,16 +2,15 @@
 #include "imgui.h"
 #include "Themes.h"
 
-
 static void Preferences_Theme() {
     using namespace ImGui;
 
-    if (Button("Bess Dark")) Themes::SetBessDarkColors();
-    else if (Button("Catpuccin Mocha")) Themes::SetCatpuccinMochaColors();
-    else if (Button("Dark")) Themes::SetDarkThemeColors();
-    else if (Button("ImGui")) Themes::SetDefaultColors();
-    else if (Button("Fluent UI")) Themes::SetFluentUIColors();
-    else if (Button("Modern Dark")) Themes::SetModernDarkColors();
+    static std::vector<ThemeEntry> themes = Themes::GetThemes();
+    ImVec2 fullWidth(GetContentRegionAvail().x, 0);
+
+    for (const auto& theme : themes) {
+        if (Button(theme.name, fullWidth)) theme.apply();
+    }
 }
 
 void MenuBar::Render() {

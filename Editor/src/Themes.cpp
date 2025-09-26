@@ -352,6 +352,11 @@ void Themes::SetFluentUIColors()
     style.ScrollbarSize = 16.0f;
 }
 
+std::vector<ThemeEntry>& Themes::GetThemes()
+{
+    return m_Themes;
+}
+
 void Themes::SaveDefaultColors()
 {
     if (m_SavedDefaultColors) return;
