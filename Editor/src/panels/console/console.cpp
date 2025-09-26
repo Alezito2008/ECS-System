@@ -50,15 +50,24 @@ void Console::Render() {
         if (Button("Clear")) {
             logBuffer.clear();
         };
+        if (IsItemHovered()) {
+            SetTooltip("Clear all logs");
+        };
         SameLine();
         if (Button("Copy")) {
             LogToClipboard();
             TextUnformatted(logBuffer.begin(),logBuffer.end());
             LogFinish();
         };
+        if (IsItemHovered()) {
+            SetTooltip("Copy all logs");
+        };
         SameLine();
         if (Button("Options")) {
             OpenPopup("Console Options");
+        };
+        if (IsItemHovered()) {
+            SetTooltip("Display options");
         };
         EndTable();
     }

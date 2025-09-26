@@ -7,6 +7,7 @@ add_library(ECS STATIC
     src/GameObject.cpp
     src/Component.cpp
     src/Scene.cpp
+    src/SceneManager.cpp
     src/Components/Transform.cpp
 )
 
@@ -17,10 +18,10 @@ target_link_libraries(ECS PRIVATE glm::glm)
 
 # EJecutable para probar cosas
 
-add_executable(Objetos src/main.cpp)
-target_link_libraries(Objetos PRIVATE ECS)
+add_executable(Test src/main.cpp)
+target_link_libraries(Test PRIVATE ECS)
 
-target_include_directories(Objetos
+target_include_directories(Test
 PUBLIC ${PROJECT_SOURCE_DIR}/include/ECS
 PRIVATE ${PROJECT_SOURCE_DIR}/private
 )

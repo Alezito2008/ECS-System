@@ -7,7 +7,7 @@
 
 class Scene {
 public:
-    Scene();
+    Scene(const std::string& name = "");
     ~Scene() = default;
 
     GameObject& CreateGameObject(const std::string& name) {
@@ -15,6 +15,10 @@ public:
         GameObject& ref = *gameObject;
         m_GameObjects.push_back(std::move(gameObject));
         return ref;
+    }
+
+    inline const std::string& GetName() const {
+        return m_Name;
     }
 
     inline std::vector<std::unique_ptr<GameObject>>& GetGameObjects() {
@@ -28,5 +32,6 @@ public:
 private:
     static unsigned int s_NextID;
     unsigned int m_ID;
+    std::string m_Name;
     std::vector<std::unique_ptr<GameObject>> m_GameObjects;
 };

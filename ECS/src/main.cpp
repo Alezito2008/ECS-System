@@ -2,10 +2,12 @@
 
 #include "ComponentManager.h"
 #include "GameObject.h"
-#include "Scene.h"
+#include "SceneManager.h"
 
 int main() {
-    Scene scene;
+    SceneManager& sceneManager = SceneManager::GetInstance();
+
+    Scene& scene = sceneManager.CreateScene("Escena 1");
 
     GameObject& cubo = scene.CreateGameObject("Cubo");
     GameObject& circulo = scene.CreateGameObject("Circulo");
