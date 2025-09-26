@@ -3,6 +3,7 @@
 #include "DockLayout.h"
 #include "Themes.h"
 
+#include "MenuBar/MenuBar.h"
 #include "Console/Console.h"
 #include "Tree/Tree.h"
 
@@ -36,6 +37,10 @@ void ShowInterface() {
         GameObject& triangulo1 = scene.CreateGameObject("Triangulo 1");
         esfera2.AddChild(triangulo1);
 
+        GameObject& manzana = scene2.CreateGameObject("Manzana");
+        GameObject& pera = scene2.CreateGameObject("Pera");
+        manzana.AddChild(pera);
+
         firstTime = false;
         ConsolePanel::AddLog(LOGTYPE::INFO, "Hola");
         ConsolePanel::AddLog(LOGTYPE::INFO, "Chau");
@@ -52,13 +57,13 @@ void ShowInterface() {
     }
 
     SplitList splitList{
-        { "root", ImGuiDir_Down, "Console", "Up", 0.25 },
+        { "root", ImGuiDir_Right, "Inspector", "Left", 0.25 },
+        { "Left", ImGuiDir_Down, "Console", "Up", 0.25 },
         { "Up", ImGuiDir_Left, "Tree", "Right", 0.3 },
-        { "Up", ImGuiDir_Right, "Inspector", nullptr, 0.25 }
     };
-
     layout.Setup(splitList);
 
+    MenuBar::Render();
     ConsolePanel::Render();
     TreePanel::Render(sceneManager.GetScenes());
 

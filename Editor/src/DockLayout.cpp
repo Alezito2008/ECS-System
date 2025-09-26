@@ -7,8 +7,10 @@ void DockLayout::Setup(const SplitList& splits) {
     ImGuiViewport* viewport = ImGui::GetMainViewport();
     ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
 
-    ImGui::SetNextWindowPos(viewport->Pos);
-    ImGui::SetNextWindowSize(viewport->Size);
+    float menuBarHeight = ImGui::GetFrameHeight();
+
+    ImGui::SetNextWindowPos(ImVec2(viewport->Pos.x, viewport->Pos.y + menuBarHeight));
+    ImGui::SetNextWindowSize(ImVec2(viewport->Size.x, viewport->Size.y - menuBarHeight));
     ImGui::SetNextWindowViewport(viewport->ID);
 
     ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse |

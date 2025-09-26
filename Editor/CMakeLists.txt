@@ -8,6 +8,7 @@ add_executable(EditorMain
     src/Themes.cpp
     src/Panels/Console/Console.cpp
     src/Panels/Tree/Tree.cpp
+    src/Panels/MenuBar/MenuBar.cpp
 )
 
 target_include_directories(EditorMain PRIVATE
