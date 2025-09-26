@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 
 enum class LOGTYPE {
@@ -7,7 +9,7 @@ enum class LOGTYPE {
     ERROR
 };
 
-namespace Console {
+namespace ConsolePanel {
     void Render();
     void AddLog(LOGTYPE type, const std::string& text);
 }

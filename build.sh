@@ -14,6 +14,7 @@ if [ ! -f "compile_commands.json" ]; then
     ln -s ./build/compile_commands.json
 fi
 
+# Salir si no compila
 if [ $BUILD_STATUS -ne 0 ]; then
     exit
 fi

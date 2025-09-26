@@ -1,5 +1,6 @@
+#include "Console.h"
+
 #include "imgui.h"
-#include "console/console.h"
 
 #include <ctime>
 
@@ -26,12 +27,12 @@ static std::string GetCurrentTimeString() {
     return std::string(buffer);
 }
 
-void Console::AddLog(LOGTYPE type, const std::string& text) {
+void ConsolePanel::AddLog(LOGTYPE type, const std::string& text) {
     logBuffer.appendf("[%s] [%s] %s\n", GetCurrentTimeString().c_str(), LogTypeToString(type).c_str(), text.c_str());
     scrollToBottom = autoScroll;
 }
 
-void Console::Render() {
+void ConsolePanel::Render() {
     using namespace ImGui;
     Begin("Console");
 
