@@ -1,6 +1,7 @@
 #include "MenuBar.h"
 #include "imgui.h"
 #include "Themes.h"
+#include "IconFont/IconsFontAwesome7.h"
 
 static void Preferences_Theme() {
     using namespace ImGui;
@@ -17,12 +18,12 @@ void MenuBar::Render() {
     using namespace ImGui;
 
     if (BeginMainMenuBar()) {
-        if (BeginMenu("File")) {
+        if (BeginMenu( ICON_FA_FILE" File")) {
             EndMenu();
         }
 
-        if (BeginMenu("Preferences")) {
-            if (BeginMenu("Theme")) {
+        if (BeginMenu( ICON_FA_WRENCH " Preferences")) {
+            if (BeginMenu( ICON_FA_BRUSH " Theme")) {
                 Preferences_Theme();
                 EndMenu();
             }

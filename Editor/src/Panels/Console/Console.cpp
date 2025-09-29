@@ -1,4 +1,5 @@
 #include "Console.h"
+#include "IconFont/IconsFontAwesome7.h"
 
 #include "imgui.h"
 
@@ -34,13 +35,13 @@ void ConsolePanel::AddLog(LOGTYPE type, const std::string& text) {
 
 void ConsolePanel::Render() {
     using namespace ImGui;
-    Begin("Console");
+    Begin(ICON_FA_TERMINAL " Console ###Console");
 
     if (BeginTable("ConsoleTable", 2, ImGuiTableFlags_SizingStretchProp)) {
         TableNextColumn();
 
         if (BeginPopup("Console Options")) {
-            Checkbox("AutoScroll", &autoScroll);
+            Checkbox( "AutoScroll", &autoScroll);
             EndPopup();
         }
 
@@ -48,14 +49,14 @@ void ConsolePanel::Render() {
         filter.Draw("##filter");
         
         TableNextColumn();
-        if (Button("Clear")) {
+        if (Button( ICON_FA_BROOM " Clear")) {
             logBuffer.clear();
         };
         if (IsItemHovered()) {
             SetTooltip("Clear all logs");
         };
         SameLine();
-        if (Button("Copy")) {
+        if (Button( ICON_FA_COPY " Copy")) {
             LogToClipboard();
             TextUnformatted(logBuffer.begin(),logBuffer.end());
             LogFinish();
@@ -64,7 +65,7 @@ void ConsolePanel::Render() {
             SetTooltip("Copy all logs");
         };
         SameLine();
-        if (Button("Options")) {
+        if (Button(ICON_FA_GEAR " Options")) {
             OpenPopup("Console Options");
         };
         if (IsItemHovered()) {

@@ -1,4 +1,7 @@
 #include "Tree.h"
+#include "IconFont/IconsFontAwesome7.h"
+
+#include <format>
 
 #include "imgui.h"
 
@@ -10,10 +13,13 @@ void RenderGameObject(const GameObject* obj) {
     const char* name = obj->GetName().c_str();
     const auto& children = obj->GetChilds();
 
+    char nameIcon[128];
+    snprintf(nameIcon, sizeof(nameIcon), "%s %s", ICON_FA_CUBE, name);
+
     if (children.empty()) {
-        if (TreeNodeEx(name, ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen));
+        if (TreeNodeEx(nameIcon, ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen));
     } else {
-        if (TreeNode(name)) {
+        if (TreeNode(nameIcon)) {
             for (const auto& child : children) {
                 RenderGameObject(child);
             }
@@ -28,6 +34,9 @@ void RenderScene(const Scene* scene) {
     using namespace ImGui;
 
     const char* sceneName = scene->GetName().c_str();
+    char sceneNameIcon[128];
+    snprintf(sceneNameIcon, sizeof(sceneNameIcon), "%s %s", ICON_FA_FILM, sceneName);
+    
 
     Separator();
 
@@ -40,7 +49,7 @@ void RenderScene(const Scene* scene) {
     PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(0.573, 0.467, 0.922, 1));
     PushStyleColor(ImGuiCol_HeaderActive, ImVec4(0.573, 0.467, 0.922, 1));
 
-    if (TreeNodeEx(sceneName, ImGuiTreeNodeFlags_DefaultOpen)) {
+    if (TreeNodeEx(sceneNameIcon, ImGuiTreeNodeFlags_DefaultOpen)) {
         for (const auto& obj : scene->GetGameObjects()) {
             if (obj->GetParent()) continue;
             RenderGameObject(obj.get());
@@ -52,7 +61,7 @@ void RenderScene(const Scene* scene) {
 }
 
 void TreePanel::Render(std::vector<std::unique_ptr<Scene>>& scenes) {
-    ImGui::Begin("Tree");
+    ImGui::Begin( ICON_FA_CODE_BRANCH " Tree ###Tree");
 
     for (const auto& scene : scenes) {
         RenderScene(scene.get());

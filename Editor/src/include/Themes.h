@@ -13,6 +13,9 @@ struct ThemeEntry {
 
 class Themes {
 public:
+    static void LoadFonts();
+    static void LoadGlobalStyles();
+    
     static void SetDefaultColors();
     static void SetBessDarkColors();
     static void SetCatpuccinMochaColors();

@@ -6,6 +6,7 @@
 #include "MenuBar/MenuBar.h"
 #include "Console/Console.h"
 #include "Tree/Tree.h"
+#include "Inspector/Inspector.h"
 
 #include "SceneManager.h"
 #include "GameObject.h"
@@ -19,6 +20,7 @@ static bool firstTime = true;
 
 void ShowInterface() {
     if (firstTime) {
+        Themes::LoadGlobalStyles();
         Themes::SetBessDarkColors();
 
         SceneManager& sceneManager = SceneManager::GetInstance();
@@ -41,6 +43,10 @@ void ShowInterface() {
         GameObject& pera = scene2.CreateGameObject("Pera");
         manzana.AddChild(pera);
 
+        GameObject& jugador = scene2.CreateGameObject("Player");
+        GameObject& cam = scene2.CreateGameObject("cmaara");
+        jugador.AddChild(cam);
+
         firstTime = false;
         ConsolePanel::AddLog(LOGTYPE::INFO, "Hola");
         ConsolePanel::AddLog(LOGTYPE::INFO, "Chau");
@@ -57,16 +63,14 @@ void ShowInterface() {
     }
 
     SplitList splitList{
-        { "root", ImGuiDir_Right, "Inspector", "Left", 0.25 },
-        { "Left", ImGuiDir_Down, "Console", "Up", 0.25 },
-        { "Up", ImGuiDir_Left, "Tree", "Right", 0.3 },
+        { "root", ImGuiDir_Right, "###Inspector", "Left", 0.25 },
+        { "Left", ImGuiDir_Down, "###Console", "Up", 0.25 },
+        { "Up", ImGuiDir_Left, "###Tree", "Right", 0.3 },
     };
     layout.Setup(splitList);
 
     MenuBar::Render();
     ConsolePanel::Render();
     TreePanel::Render(sceneManager.GetScenes());
-
-    ImGui::Begin("Inspector");
-    ImGui::End();
+    InspectorPanel::Render();
 }

@@ -1,4 +1,22 @@
 #include "Themes.h"
+#include "IconFont/IconsFontAwesome7.h"
+
+void Themes::LoadFonts() {
+    ImGuiIO &io = ImGui::GetIO();
+
+    static const ImWchar icons_ranges[] = { ICON_MIN_FA, ICON_MAX_FA };
+    ImFontConfig icons_config;
+    icons_config.MergeMode = true;
+    icons_config.PixelSnapH = true;
+
+    io.Fonts->AddFontFromFileTTF("Editor/res/fonts/DejaVuSans.ttf", 16.0f);
+    io.Fonts->AddFontFromFileTTF("Editor/res/fonts/Font Awesome 7 Free-Solid-900.otf", 12.0f, &icons_config, icons_ranges);
+}
+
+void Themes::LoadGlobalStyles() {
+    ImGuiStyle& style = ImGui::GetStyle();
+    style.IndentSpacing = 10.0f;
+}
 
 void Themes::SetDefaultColors()
 {
