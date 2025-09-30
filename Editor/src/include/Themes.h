@@ -6,6 +6,10 @@
 #include <functional>
 #include <vector>
 
+namespace Fonts {
+    extern ImFont* ConsoleFont;
+}
+
 struct ThemeEntry {
     const char* name;
     std::function<void()> apply;
@@ -32,6 +36,8 @@ private:
 
     static inline ImGuiStyle m_DefaultStyle;
     static inline ImVec4 m_DefaultColors[ImGuiCol_COUNT];
+
+    static inline std::vector<ImFont*> m_Fonts;
 
     static inline std::vector<ThemeEntry> m_Themes = {
         { "Default", [](){ SetDefaultColors(); } },

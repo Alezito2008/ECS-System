@@ -1,4 +1,4 @@
-#include "Inspector/Inspector.h"
+#include "Inspector/InspectorPanel.h"
 #include "IconFont/IconsFontAwesome7.h"
 #include "imgui.h"
 

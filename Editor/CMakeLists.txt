@@ -8,10 +8,11 @@ add_executable(EditorMain
     src/DockLayout.cpp
     src/Themes.cpp
     src/Preferences.cpp
-    src/Panels/Console/Console.cpp
-    src/Panels/Tree/Tree.cpp
+    src/Console.cpp
+    src/Panels/Console/ConsolePanel.cpp
+    src/Panels/Tree/TreePanel.cpp
+    src/Panels/Inspector/InspectorPanel.cpp
     src/Panels/MenuBar/MenuBar.cpp
-    src/Panels/Inspector/Inspector.cpp
 )
 
 target_include_directories(EditorMain PRIVATE

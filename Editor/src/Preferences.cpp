@@ -1,7 +1,7 @@
 #include "Preferences.h"
+#include "Console.h"
 
 #include <fstream>
-#include <iostream>
 #include <functional>
 
 static constexpr const char* DEFAULT_CONFIG_FILE = "config.ini";
@@ -12,7 +12,7 @@ Preferences PreferenceManager::s_Preferences;
 template<>
 inline void PreferenceManager::DeserializeField<bool>(const std::string& field, bool& valueToChange) {
     if (field != "true" && field != "false" && field != "1" && field != "0") {
-        std::cout << "[WARN] Expected: <bool> on " << field << std::endl;
+        Console::Warning("Expected: <bool> on " + field);
         return;
     }
     valueToChange = field == "true" || field == "1";
@@ -23,7 +23,7 @@ inline void PreferenceManager::DeserializeField<int>(const std::string& field, i
     try {
         valueToChange = stoi(field); 
     } catch (...) {
-        std::cout << "[WARN] Expected: <int> on " << field << std::endl;
+        Console::Warning("Expected: <int> on " + field);
         return;
     }
 }
@@ -33,7 +33,7 @@ inline void PreferenceManager::DeserializeField<float>(const std::string& field,
     try {
         valueToChange = stof(field); 
     } catch (...) {
-        std::cout << "[WARN] Expected: <float> on " << field << std::endl;
+        Console::Warning("Expected: <float> on " + field);
     }
 }
 
@@ -54,7 +54,7 @@ Preferences& PreferenceManager::GetPreferences(const std::string& fileName)
     std::ifstream in(s_FileName);
 
     if (!in.is_open()) {
-        std::cout << "[ERROR] Couldn't open preferences file: " << fileName << std::endl;
+        Console::Error("Couldn't open preferences file: " + fileName);
         return s_Preferences; // Devolver por defecto
     }
 
@@ -72,13 +72,15 @@ Preferences& PreferenceManager::GetPreferences(const std::string& fileName)
             DeserializeField<float>(value, s_Preferences.fontSize);
         } else if (key == "autoScroll") {
             DeserializeField<bool>(value, s_Preferences.autoScroll);
+        } else {
+            Console::Error("Unknown key '" + key + "' in file " + s_FileName);
         }
     }
 
     return s_Preferences;
 }
 
-bool PreferenceManager::SavePreferences(const std::string &fileName)
+bool PreferenceManager::SavePreferences(const std::string& fileName)
 {
     std::string fileToOpen;
 

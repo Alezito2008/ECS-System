@@ -1,38 +1,22 @@
-#include "Console.h"
+#include "ConsolePanel.h"
 #include "IconFont/IconsFontAwesome7.h"
 #include "Preferences.h"
+#include "Themes.h"
 
 #include "imgui.h"
 
-#include <ctime>
-
-static Preferences& preferences = PreferenceManager::GetPreferences();
 
 static char inputBuffer[512];
 static ImGuiTextBuffer logBuffer;
 static ImGuiTextFilter filter;
+
+static Preferences& preferences = PreferenceManager::GetPreferences();
+
 static bool autoScroll = preferences.autoScroll;
 static bool scrollToBottom = false;
 
-static std::string LogTypeToString(LOGTYPE type) {
-    switch (type) {
-        case LOGTYPE::DEBUG:    return "DEBUG";
-        case LOGTYPE::INFO:     return "INFO";
-        case LOGTYPE::WARNING:  return "WARNING";
-        case LOGTYPE::ERROR:    return "ERROR";
-    }
-    return "NULL";
-}
-
-static std::string GetCurrentTimeString() {
-    std::time_t now = std::time(nullptr);
-    char buffer[20];
-    std::strftime(buffer, sizeof(buffer), "%H:%M:%S", std::localtime(&now));
-    return std::string(buffer);
-}
-
-void ConsolePanel::AddLog(const std::string& text, LOGTYPE type /*= LOGTYPE::INFO*/) {
-    logBuffer.appendf("[%s] [%s] %s\n", GetCurrentTimeString().c_str(), LogTypeToString(type).c_str(), text.c_str());
+void ConsolePanel::AddLog(const std::string& msg, LogType type) {
+    logBuffer.appendf("%s\n", msg.c_str());
     scrollToBottom = autoScroll;
 }
 
@@ -52,7 +36,12 @@ void ConsolePanel::Render() {
         }
 
         SetNextItemWidth(GetContentRegionAvail().x);
+
+        PushFont(Fonts::ConsoleFont, 14.0f);
+
         filter.Draw("##filter");
+
+        PopFont();
         
         TableNextColumn();
         if (Button( ICON_FA_BROOM " Clear")) {
@@ -84,15 +73,38 @@ void ConsolePanel::Render() {
     const char* text = logBuffer.begin();
     const char* line_start = text;
 
+    int line_index = 0;
+    float width = GetContentRegionAvail().x;
+
+    PushFont(Fonts::ConsoleFont, 14.0f);
+
     for (const char* p = text; *p; p++) {
         if (*p == '\n') {
             std::string line(line_start, p - line_start);
             if (filter.PassFilter(line.c_str())) {
+                ImVec2 pos = GetCursorScreenPos();
+                ImVec2 text_size = CalcTextSize(line.c_str(), nullptr, false, width);
+
+                if (line_index % 2 == 0) {
+                    GetWindowDrawList()->AddRectFilled(
+                        pos,
+                        ImVec2(width + pos.x, text_size.y + pos.y),
+                        IM_COL32(100, 100, 100, 50)
+                    );
+                }
+
+                PushTextWrapPos(width);
                 TextUnformatted(line.c_str());
+                PopTextWrapPos();
+
+
+                line_index++;
             }
             line_start = p + 1;
         }
     }
+
+    PopFont();
 
     if (scrollToBottom) {
         SetScrollHereY(1.0f);

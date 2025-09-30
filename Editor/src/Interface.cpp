@@ -4,9 +4,9 @@
 #include "Themes.h"
 
 #include "MenuBar/MenuBar.h"
-#include "Console/Console.h"
-#include "Tree/Tree.h"
-#include "Inspector/Inspector.h"
+#include "Console/ConsolePanel.h"
+#include "Tree/TreePanel.h"
+#include "Inspector/InspectorPanel.h"
 
 #include "SceneManager.h"
 #include "GameObject.h"
@@ -23,6 +23,11 @@ void ShowInterface() {
     if (firstTime) {
         Themes::LoadGlobalStyles();
         Themes::ApplyPreferredTheme();
+
+        Console::Debug("Manzana");
+        Console::Debug("Manzana");
+        Console::Debug("Manzana");
+        Console::Debug("Manzana");
 
         SceneManager& sceneManager = SceneManager::GetInstance();
         Scene& scene = sceneManager.CreateScene("Escena 1");

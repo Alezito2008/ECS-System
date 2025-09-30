@@ -1,8 +1,11 @@
 #include "Themes.h"
 #include "IconFont/IconsFontAwesome7.h"
 #include "Preferences.h"
+#include "Console.h"
 
-#include <iostream> // TODO: Cambiar a Console.h cuando lo haga
+namespace Fonts {
+    ImFont* ConsoleFont = nullptr;
+}
 
 void Themes::LoadFonts() {
     ImGuiIO &io = ImGui::GetIO();
@@ -12,8 +15,15 @@ void Themes::LoadFonts() {
     icons_config.MergeMode = true;
     icons_config.PixelSnapH = true;
 
+    // Fuente principal
     io.Fonts->AddFontFromFileTTF("Editor/res/fonts/DejaVuSans.ttf", 16.0f);
+    
+    // Iconos
     io.Fonts->AddFontFromFileTTF("Editor/res/fonts/Font Awesome 7 Free-Solid-900.otf", 12.0f, &icons_config, icons_ranges);
+
+    // Fuente consola
+    // TODO: Cambiar a una fuente monospace
+    Fonts::ConsoleFont = io.Fonts->AddFontFromFileTTF("Editor/res/fonts/DejaVuSansMono.ttf", 14.0f);
 }
 
 void Themes::LoadGlobalStyles() {
@@ -33,7 +43,7 @@ void Themes::ApplyPreferredTheme()
     }
 
     if (!themeFound) {
-        std::cout << "[ERROR] Theme not found:" << preferences.theme << ". Using default theme" << std::endl;
+        Console::Error("Theme not found: " + preferences.theme + ". Using default theme");
     }
 }
 
