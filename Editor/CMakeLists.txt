@@ -7,6 +7,7 @@ add_executable(EditorMain
     src/Interface.cpp
     src/DockLayout.cpp
     src/Themes.cpp
+    src/Preferences.cpp
     src/Panels/Console/Console.cpp
     src/Panels/Tree/Tree.cpp
     src/Panels/MenuBar/MenuBar.cpp

@@ -14,6 +14,7 @@
 
 static DockLayout layout;
 
+
 static SceneManager& sceneManager = SceneManager::GetInstance();
 
 static bool firstTime = true;
@@ -21,7 +22,7 @@ static bool firstTime = true;
 void ShowInterface() {
     if (firstTime) {
         Themes::LoadGlobalStyles();
-        Themes::SetBessDarkColors();
+        Themes::ApplyPreferredTheme();
 
         SceneManager& sceneManager = SceneManager::GetInstance();
         Scene& scene = sceneManager.CreateScene("Escena 1");
@@ -48,18 +49,6 @@ void ShowInterface() {
         jugador.AddChild(cam);
 
         firstTime = false;
-        ConsolePanel::AddLog(LOGTYPE::INFO, "Hola");
-        ConsolePanel::AddLog(LOGTYPE::INFO, "Chau");
-        ConsolePanel::AddLog(LOGTYPE::INFO, "Manzana");
-        ConsolePanel::AddLog(LOGTYPE::INFO, "Hola");
-        ConsolePanel::AddLog(LOGTYPE::INFO, "Banana");
-        ConsolePanel::AddLog(LOGTYPE::INFO, "Hola");
-        ConsolePanel::AddLog(LOGTYPE::INFO, "Hola");
-        ConsolePanel::AddLog(LOGTYPE::INFO, "Chau");
-        ConsolePanel::AddLog(LOGTYPE::INFO, "Manzana");
-        ConsolePanel::AddLog(LOGTYPE::INFO, "Hola");
-        ConsolePanel::AddLog(LOGTYPE::INFO, "Banana");
-        ConsolePanel::AddLog(LOGTYPE::INFO, "Hola");
     }
 
     SplitList splitList{

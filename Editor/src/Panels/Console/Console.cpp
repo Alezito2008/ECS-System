@@ -1,14 +1,17 @@
 #include "Console.h"
 #include "IconFont/IconsFontAwesome7.h"
+#include "Preferences.h"
 
 #include "imgui.h"
 
 #include <ctime>
 
+static Preferences& preferences = PreferenceManager::GetPreferences();
+
 static char inputBuffer[512];
 static ImGuiTextBuffer logBuffer;
 static ImGuiTextFilter filter;
-static bool autoScroll = true;
+static bool autoScroll = preferences.autoScroll;
 static bool scrollToBottom = false;
 
 static std::string LogTypeToString(LOGTYPE type) {
@@ -28,7 +31,7 @@ static std::string GetCurrentTimeString() {
     return std::string(buffer);
 }
 
-void ConsolePanel::AddLog(LOGTYPE type, const std::string& text) {
+void ConsolePanel::AddLog(const std::string& text, LOGTYPE type /*= LOGTYPE::INFO*/) {
     logBuffer.appendf("[%s] [%s] %s\n", GetCurrentTimeString().c_str(), LogTypeToString(type).c_str(), text.c_str());
     scrollToBottom = autoScroll;
 }
@@ -41,7 +44,10 @@ void ConsolePanel::Render() {
         TableNextColumn();
 
         if (BeginPopup("Console Options")) {
-            Checkbox( "AutoScroll", &autoScroll);
+            if (Checkbox( "AutoScroll", &autoScroll)) {
+                preferences.autoScroll = autoScroll;
+                PreferenceManager::SavePreferences();
+            };
             EndPopup();
         }
 

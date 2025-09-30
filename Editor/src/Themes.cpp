@@ -1,5 +1,8 @@
 #include "Themes.h"
 #include "IconFont/IconsFontAwesome7.h"
+#include "Preferences.h"
+
+#include <iostream> // TODO: Cambiar a Console.h cuando lo haga
 
 void Themes::LoadFonts() {
     ImGuiIO &io = ImGui::GetIO();
@@ -16,6 +19,22 @@ void Themes::LoadFonts() {
 void Themes::LoadGlobalStyles() {
     ImGuiStyle& style = ImGui::GetStyle();
     style.IndentSpacing = 10.0f;
+}
+
+void Themes::ApplyPreferredTheme()
+{
+    bool themeFound = false;
+    Preferences& preferences = PreferenceManager::GetPreferences();
+    for (const ThemeEntry& theme : m_Themes) {
+        if (theme.name != preferences.theme) continue;
+        theme.apply();
+        themeFound = true;
+        break;
+    }
+
+    if (!themeFound) {
+        std::cout << "[ERROR] Theme not found:" << preferences.theme << ". Using default theme" << std::endl;
+    }
 }
 
 void Themes::SetDefaultColors()

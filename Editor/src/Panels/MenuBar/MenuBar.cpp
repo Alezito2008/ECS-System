@@ -2,6 +2,9 @@
 #include "imgui.h"
 #include "Themes.h"
 #include "IconFont/IconsFontAwesome7.h"
+#include "Preferences.h"
+
+static Preferences& preferences = PreferenceManager::GetPreferences();
 
 static void Preferences_Theme() {
     using namespace ImGui;
@@ -10,7 +13,11 @@ static void Preferences_Theme() {
     ImVec2 fullWidth(GetContentRegionAvail().x, 0);
 
     for (const auto& theme : themes) {
-        if (Button(theme.name, fullWidth)) theme.apply();
+        if (Button(theme.name, fullWidth)) {
+            theme.apply();
+            preferences.theme = theme.name;
+            PreferenceManager::SavePreferences();
+        }
     }
 }
 

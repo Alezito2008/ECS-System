@@ -15,6 +15,7 @@ class Themes {
 public:
     static void LoadFonts();
     static void LoadGlobalStyles();
+    static void ApplyPreferredTheme();
     
     static void SetDefaultColors();
     static void SetBessDarkColors();

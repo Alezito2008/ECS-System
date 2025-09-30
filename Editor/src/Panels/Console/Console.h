@@ -11,5 +11,5 @@ enum class LOGTYPE {
 
 namespace ConsolePanel {
     void Render();
-    void AddLog(LOGTYPE type, const std::string& text);
+    void AddLog(const std::string& text, LOGTYPE type = LOGTYPE::INFO);
 }
