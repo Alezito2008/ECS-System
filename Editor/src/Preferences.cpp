@@ -58,11 +58,18 @@ Preferences& PreferenceManager::GetPreferences(const std::string& fileName)
         return s_Preferences; // Devolver por defecto
     }
 
+    int line_number = 0;
+
     while (getline(in, buffer)) {
+        line_number++;
+
         if (buffer.empty()) continue;
 
         size_t equal_pos = buffer.find("=");
-        if (equal_pos == std::string::npos) continue;
+        if (equal_pos == std::string::npos) {
+            Console::Warning("Invalid line on " + s_FileName + ':' + std::to_string(line_number) + " '" + buffer + '\'');
+            continue;
+        };
         std::string key = trim(buffer.substr(0, equal_pos));
         std::string value = trim(buffer.substr(equal_pos + 1));
         

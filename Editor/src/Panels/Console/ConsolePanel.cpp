@@ -85,7 +85,7 @@ void ConsolePanel::Render() {
                 ImVec2 pos = GetCursorScreenPos();
                 ImVec2 text_size = CalcTextSize(line.c_str(), nullptr, false, width);
 
-                if (line_index % 2 == 0) {
+                if (line_index % 2 == 1) {
                     GetWindowDrawList()->AddRectFilled(
                         pos,
                         ImVec2(width + pos.x, text_size.y + pos.y),
