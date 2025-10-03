@@ -46,6 +46,11 @@ class GameObject {
         GameObject* m_Parent = nullptr;
 };
 
+class Selection {
+public:
+    inline static GameObject* selected = nullptr;
+};
+
 std::ostream& operator<<(std::ostream& os, const GameObject& obj);
 
 #include "GameObject.inl"
