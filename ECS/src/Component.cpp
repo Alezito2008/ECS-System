@@ -7,6 +7,13 @@ Component::Component(GameObject* parent) {
     m_Owner = parent;
 }
 
+Component::~Component()
+{
+    for (auto* field : m_SerializedFields) {
+        delete field;
+    }
+}
+
 void Component::Start() {};
 void Component::Update() {};
 void Component::OnDestroy() {};
