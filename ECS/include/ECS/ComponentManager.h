@@ -20,7 +20,7 @@ public:
     T* CreateComponent(GameObject* owner) {
         static_assert(std::is_base_of<Component, T>::value, "T must inherit from Component class");
         
-        std::unique_ptr comp = std::make_unique<T>(owner);
+        std::unique_ptr<T> comp = std::make_unique<T>(owner);
         T* raw = comp.get();
 
         auto& componentsVec = components[typeid(T).hash_code()];
@@ -30,6 +30,13 @@ public:
         
         return raw;
     };
+
+    const std::vector<Component*>& GetComponents(const GameObject* owner) const {
+        static const std::vector<Component*> empty;
+        auto it = componentsOwners.find(const_cast<GameObject*>(owner));
+        if (it != componentsOwners.end()) return it->second;
+        return empty;
+    }
 
     template <typename T>
     T* FindComponent(GameObject* owner) {

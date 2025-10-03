@@ -62,6 +62,7 @@ std::ostream &operator<<(std::ostream &os, const GameObject &obj)
     os << "Name: " << obj.GetName() <<
         "\nID: " << obj.GetID() <<
         "\nParent: " << (obj.GetParent() ? obj.GetParent()->GetName() : "null") <<
-        "\nnChilds: " << obj.GetChilds().size() << std::endl;
+        "\nnChilds: " << obj.GetChilds().size() <<
+        "\nnComponents: " << obj.GetComponents().size() << std::endl;
     return os;
 }

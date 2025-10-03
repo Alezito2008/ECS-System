@@ -34,7 +34,7 @@ class GameObject {
         GameObject* FindChild(const unsigned int index) const;
         void AddChild(GameObject& child);
         
-        inline const std::vector<std::unique_ptr<Component>>& GetComponents() const { return m_Components; }
+        inline const std::vector<Component*>& GetComponents() const { return ComponentManager::GetInstance().GetComponents(this); }
 
         template <typename T> T* FindComponent();
         template <typename T> bool RemoveComponent();
