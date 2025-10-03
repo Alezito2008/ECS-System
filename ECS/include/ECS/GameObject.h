@@ -22,6 +22,10 @@ class GameObject {
         inline const std::string& GetName() const { return m_Name; }
         inline GameObject* GetParent() const { return m_Parent; }
 
+        inline bool* GetActivePtr() { return &m_IsActive; }
+        inline void SetActive(bool active) { m_IsActive = active; }
+        inline bool IsActive() const { return m_IsActive; }
+
         inline std::vector<GameObject*>& GetChilds() { return m_Childs; };
         inline const std::vector<GameObject*>& GetChilds() const { return m_Childs; }
 
@@ -39,6 +43,7 @@ class GameObject {
         unsigned int m_ID;
         static unsigned int s_NextID;
 
+        bool m_IsActive = true;
         std::string m_Name;
 
         std::vector<std::unique_ptr<Component>> m_Components;

@@ -7,6 +7,8 @@
 #include <vector>
 
 namespace Fonts {
+    extern ImFont* MainFont;
+    extern ImFont* MainFontBold;
     extern ImFont* ConsoleFont;
 }
 

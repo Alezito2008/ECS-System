@@ -4,6 +4,8 @@
 #include "Console.h"
 
 namespace Fonts {
+    ImFont* MainFont = nullptr;
+    ImFont* MainFontBold = nullptr;
     ImFont* ConsoleFont = nullptr;
 }
 
@@ -15,15 +17,14 @@ void Themes::LoadFonts() {
     icons_config.MergeMode = true;
     icons_config.PixelSnapH = true;
 
-    // Fuente principal
-    io.Fonts->AddFontFromFileTTF("Editor/res/fonts/DejaVuSans.ttf", 16.0f);
-    
+    Fonts::MainFont = io.Fonts->AddFontFromFileTTF("Editor/res/fonts/DejaVuSans.ttf", 16.0f);
+
     // Iconos
     io.Fonts->AddFontFromFileTTF("Editor/res/fonts/Font Awesome 7 Free-Solid-900.otf", 12.0f, &icons_config, icons_ranges);
-
-    // Fuente consola
-    // TODO: Cambiar a una fuente monospace
+    
+    Fonts::MainFontBold = io.Fonts->AddFontFromFileTTF("Editor/res/fonts/DejaVuSansCondensed-Bold.ttf", 16.0f);
     Fonts::ConsoleFont = io.Fonts->AddFontFromFileTTF("Editor/res/fonts/DejaVuSansMono.ttf", 14.0f);
+
 }
 
 void Themes::LoadGlobalStyles() {

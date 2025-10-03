@@ -69,10 +69,16 @@ void RenderScene(const Scene* scene) {
     PopStyleColor();
 
     if (open) {
+        PushStyleColor(ImGuiCol_Header, IM_COL32(0,0,0,0));
+        PushStyleColor(ImGuiCol_HeaderHovered, Color::SelectionBG);
+        PushStyleColor(ImGuiCol_HeaderActive, Color::ActiveBG);
+
         for (const auto& obj : scene->GetGameObjects()) {
             if (obj->GetParent()) continue;
             RenderGameObject(obj.get());
         }
+
+        PopStyleColor(3);
     }
 
 }
@@ -80,15 +86,14 @@ void RenderScene(const Scene* scene) {
 void TreePanel::Render(std::vector<std::unique_ptr<Scene>>& scenes) {
     ImGui::Begin( ICON_FA_CODE_BRANCH " Tree ###Tree");
 
-    ImGui::PushStyleColor(ImGuiCol_Header, IM_COL32(0,0,0,0));
-    ImGui::PushStyleColor(ImGuiCol_HeaderHovered, Color::SelectionBG);
-    ImGui::PushStyleColor(ImGuiCol_HeaderActive, Color::ActiveBG);
-
     for (const auto& scene : scenes) {
         RenderScene(scene.get());
     }
 
-    ImGui::PopStyleColor(3);
+    // Deseleccionar si se hace click en cualquier lugar del panel
+    if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGui::IsAnyItemHovered()) {
+        Selection::selected = nullptr;
+    }
 
     ImGui::End();
 }
