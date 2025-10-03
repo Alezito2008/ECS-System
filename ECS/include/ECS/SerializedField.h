@@ -3,9 +3,9 @@
 #include <typeinfo>
 
 struct ISerializedField {
-    virtual const char* GetName() const;
-    virtual void* GetPtr();
-    virtual const std::type_info& GetType() const;
+    virtual const char* GetName() const = 0;
+    virtual void* GetPtr() = 0;
+    virtual const std::type_info& GetType() const = 0;
 };
 
 template <typename T>

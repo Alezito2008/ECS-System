@@ -15,8 +15,14 @@ public:
 
     glm::mat4 worldMatrix;
 
+    int x, y, z;
+
     Transform(GameObject* parent)
-        : Component(parent), position(0.0f), rotation(0.0f), scale(0.0f) {}
+        : Component(parent), position(0.0f), rotation(0.0f), scale(0.0f) {
+            SerializeField("x", x);
+            SerializeField("y", y);
+            SerializeField("z", z);
+        }
 
     const std::string& GetName() const override {
         static const std::string name = "Transform";

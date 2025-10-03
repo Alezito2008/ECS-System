@@ -11,6 +11,8 @@
 #include "SceneManager.h"
 #include "GameObject.h"
 
+#include "Components/Transform.h"
+
 static DockLayout layout;
 
 static SceneManager& sceneManager = SceneManager::GetInstance();
@@ -27,6 +29,8 @@ void ShowInterface() {
         GameObject& cubo1 = scene.CreateGameObject("Cubo 1");
         GameObject& cubo2 = scene.CreateGameObject("Cubo 2");
         GameObject& cubo3 = scene.CreateGameObject("Cubo 3");
+
+        cubo3.AddComponent<Transform>();
 
         cubo2.AddChild(cubo1);
         cubo3.AddChild(cubo1);
