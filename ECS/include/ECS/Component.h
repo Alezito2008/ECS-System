@@ -14,6 +14,7 @@ public:
 
     void Destroy();
 
+    inline bool* GetActivePtr() { return &m_IsActive; }
     inline void SetActive(const bool active) { m_IsActive = active; }
     inline bool IsActive() const { return m_IsActive; }
 

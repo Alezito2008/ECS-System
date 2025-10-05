@@ -12,9 +12,11 @@ const std::string ToTag(const std::string& name) {
     return "###" + name + "_field";
 } 
 
-static void DrawSerializedField(ISerializedField* field) {
+static void DrawSerializedField(ISerializedField* field, bool enabled) {
     using namespace ImGui;
     const char* name = field->GetName();
+
+    if (!enabled) BeginDisabled();
 
     if (field->GetType() == typeid(int)) {
         int* value = static_cast<int*>(field->GetPtr());
@@ -23,6 +25,8 @@ static void DrawSerializedField(ISerializedField* field) {
         SetNextItemWidth(100);
         InputInt(ToTag(name).c_str(), value);
     }
+
+    if (!enabled) EndDisabled();
 }
 
 void RenderObjectInfo(GameObject* obj) {
@@ -57,15 +61,23 @@ void RenderObjectInfo(GameObject* obj) {
 void RenderComponent(Component* comp) {
     using namespace ImGui;
 
+    const std::string name = " " + comp->GetName();
+    const bool active = comp->IsActive();
+
+    PushID(comp);
+
     Dummy(ImVec2(0, 2.5f));
     PushFont(Fonts::MainFontBold, 16.0f);
-    Text(comp->GetName().c_str());
+    // Checkbox activado
+    Checkbox(name.c_str(), comp->GetActivePtr());
+    // Titulo
     PopFont();
+
     PushFont(Fonts::ConsoleFont, 16.0f);
-    PushID(comp);
+    // Fields
     for (ISerializedField* field : comp->GetSerializedFields()) {
         Dummy(ImVec2(0, 2.5f));
-        DrawSerializedField(field);
+        DrawSerializedField(field, active);
     }
     PopID();
     PopFont();

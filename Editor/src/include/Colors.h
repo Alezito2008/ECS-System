@@ -7,4 +7,5 @@ namespace Color {
     constexpr ImVec4 SelectionBG        = ImVec4(1, 1, 1, 0.2);
     constexpr ImVec4 ActiveBG           = ImVec4(1, 1, 1, 0.5);
     constexpr ImVec4 SecondaryText      = ImVec4(1, 1, 1, 0.7);
+    constexpr ImVec4 Disabled           = ImVec4(1, 1, 1, 0.3);
 };
