@@ -5,7 +5,6 @@
 #include <iostream>
 #include <algorithm>
 
-// #include "Component.h"
 #include "Components/Transform.h"
 
 class Component;

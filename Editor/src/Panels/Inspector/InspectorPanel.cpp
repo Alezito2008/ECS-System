@@ -6,6 +6,7 @@
 #include "GameObject.h"
 #include "GameObject.inl"
 #include "SerializedField.h"
+#include "ComponentSelector/ComponentSelectorPopup.h"
 
 const std::string ToTag(const std::string& name) {
     return "###" + name + "_field";
@@ -35,9 +36,9 @@ void RenderObjectInfo(GameObject* obj) {
 
     SeparatorText("Properties");
 
-    PushFont(Fonts::ConsoleFont, 14.0f);
-
     Dummy(ImVec2(0, 5.0f));
+    
+    PushFont(Fonts::ConsoleFont, 14.0f);
 
     GameObject* parent = obj->GetParent();
 
@@ -46,9 +47,9 @@ void RenderObjectInfo(GameObject* obj) {
     Text("Components: %d", obj->GetComponents().size());
     Text("Parent: %s", parent ? parent->GetName().c_str() : "null");
 
-    Dummy(ImVec2(0, 5.0f));
-
     PopFont();
+
+    Dummy(ImVec2(0, 5.0f));
 
     SeparatorText("Components");
 }
@@ -61,13 +62,27 @@ void RenderComponent(Component* comp) {
     Text(comp->GetName().c_str());
     PopFont();
     PushFont(Fonts::ConsoleFont, 16.0f);
+    PushID(comp);
     for (ISerializedField* field : comp->GetSerializedFields()) {
         Dummy(ImVec2(0, 2.5f));
         DrawSerializedField(field);
     }
+    PopID();
     PopFont();
     Dummy(ImVec2(0, 2.5f));
     Separator();
+}
+
+void AddComponentModal() {
+    using namespace ImGui;
+
+    Dummy(ImVec2(0, 2.5f));
+    
+    float spaceX = GetContentRegionAvail().x;
+
+    if (Button(" + Add Component", ImVec2(-FLT_MIN, 0))) ComponentSelectorPopup::Open();
+
+    ComponentSelectorPopup::Render();
 }
 
 void InspectorPanel::Render() {
@@ -83,6 +98,8 @@ void InspectorPanel::Render() {
         for (auto& comp : obj->GetComponents()) {
             RenderComponent(comp);
         }
+
+        AddComponentModal();
     } else {
         // Cuando no hay nada seleccionado
         constexpr const char* text = "No Game Object selected";

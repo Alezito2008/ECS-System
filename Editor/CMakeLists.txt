@@ -9,16 +9,20 @@ add_executable(EditorMain
     src/Themes.cpp
     src/Preferences.cpp
     src/Console.cpp
+
     src/Panels/Console/ConsolePanel.cpp
     src/Panels/Tree/TreePanel.cpp
     src/Panels/Inspector/InspectorPanel.cpp
     src/Panels/MenuBar/MenuBar.cpp
+    
+    src/Popups/ComponentSelector/ComponentSelectorPopup.cpp
 )
 
 target_include_directories(EditorMain PRIVATE
     external/include
     src/include
     src/Panels
+    src/Popups
 )
 
 # Librerias y demás
