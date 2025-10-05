@@ -2,9 +2,9 @@
 
 unsigned int Component::m_NextID = 0;
 
-Component::Component(GameObject* parent) {
+Component::Component(GameObject* owner) {
     m_ID = m_NextID++;
-    m_Owner = parent;
+    m_Owner = owner;
 }
 
 Component::~Component()
@@ -25,8 +25,4 @@ const std::string& Component::GetName() const {
 
 void Component::Destroy() {
     OnDestroy();
-}
-
-void Component::SetParent(GameObject* newParent) {
-    m_Owner = newParent;
 }

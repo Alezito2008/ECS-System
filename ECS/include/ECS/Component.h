@@ -7,12 +7,10 @@ class GameObject;
 
 class Component {
 public:
-    Component(GameObject* parent);
+    Component(GameObject* owner);
     virtual ~Component();
 
     void Destroy();
-
-    inline void SetParent(GameObject* newParent);
 
     inline void SetActive(const bool active) { m_IsActive = active; }
     inline bool IsActive() const { return m_IsActive; }

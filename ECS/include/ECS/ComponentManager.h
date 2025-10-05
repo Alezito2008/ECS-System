@@ -3,10 +3,11 @@
 #include <unordered_map>
 #include <vector>
 #include <memory>
+#include <typeindex>
 
+#include "GameObject.h"
 #include "Component.h"
 
-class GameObject;
 class Component;
 
 class ComponentManager {
@@ -16,6 +17,14 @@ public:
         return componentManager;
     }
 
+    void RegisterComponent(GameObject* owner, Component* component) {
+        if (!owner || !component) return;
+
+        ownerComponentList[owner].push_back(component);
+        auto& vec = typeMap[typeid(*component)];
+        vec.push_back(component);
+    }
+
     template <typename T>
     T* CreateComponent(GameObject* owner) {
         static_assert(std::is_base_of<Component, T>::value, "T must inherit from Component class");
@@ -23,25 +32,24 @@ public:
         std::unique_ptr<T> comp = std::make_unique<T>(owner);
         T* raw = comp.get();
 
-        auto& componentsVec = components[typeid(T).hash_code()];
-        componentsVec.push_back(std::move(comp));
-        
-        componentsOwners[owner].push_back(raw);
-        
+        owner->AddComponent(std::move(comp));
+
         return raw;
     };
 
-    const std::vector<Component*>& GetComponents(const GameObject* owner) const {
+    const std::vector<Component*>& GetComponents(GameObject* owner) const {
         static const std::vector<Component*> empty;
-        auto it = componentsOwners.find(const_cast<GameObject*>(owner));
-        if (it != componentsOwners.end()) return it->second;
+        auto it = ownerComponentList.find(owner);
+        if (it != ownerComponentList.end()) return it->second;
         return empty;
     }
 
     template <typename T>
     T* FindComponent(GameObject* owner) {
-        auto it = componentsOwners.find(owner);
-        if (it != componentsOwners.end()) {
+        static_assert(std::is_base_of<Component, T>::value, "T must inherit from Component class");
+
+        auto it = ownerComponentList.find(owner);
+        if (it != ownerComponentList.end()) {
             for (auto comp : it->second) {
                 if (auto casted = dynamic_cast<T*>(comp)) return casted;
             }
@@ -53,41 +61,38 @@ public:
     bool RemoveComponent(GameObject* owner) {
         static_assert(std::is_base_of<Component, T>::value, "T must inherit from Component class");
 
-        auto findOwner = componentsOwners.find(owner);
-        if (findOwner == componentsOwners.end()) {
+        auto itOwner = ownerComponentList.find(owner);
+        if (itOwner == ownerComponentList.end()) {
             // No se enontró el owner
             return false;
         }
 
-        size_t typeID = typeid(T).hash_code();
-        auto& componentsOfOwner = findOwner->second;
+        auto& componentsOfOwner = itOwner->second;
 
         // Chequear que el tipo de componente se haya usado
-        auto findComponentType = components.find(typeID);
-        if (findComponentType == components.end()) {
+        auto itType = typeMap.find(typeid(T));
+        if (itType == typeMap.end()) {
             // No hay component1es de este tipo
             return false;
         }
 
-        std::vector<std::unique_ptr<Component>>& componentsOfType = findComponentType->second;
+        auto& componentsOfType = itType->second;
 
-        // Ciclado por unique_ptr de components
-        for (auto compIt = componentsOfType.begin(); compIt != componentsOfType.end(); ++compIt) {
-            if (auto casted = dynamic_cast<T*>(compIt->get())) {
-                casted->Destroy();
+        for (auto ownerIt = componentsOfOwner.begin(); ownerIt != componentsOfOwner.end(); ++ownerIt) {
+            T* casted = dynamic_cast<T*>(*ownerIt);
+            if (!casted) continue;            
 
-                // Eliminar de owner
-                for (auto ownerIt = componentsOfOwner.begin(); ownerIt < componentsOfOwner.end(); ++ownerIt) {
-                    if (*ownerIt == casted) {
-                        componentsOfOwner.erase(ownerIt);
-                        break;
-                    }
-                }
+            componentsOfType.erase(
+                std::remove(componentsOfType.begin(), componentsOfType.end(), casted),
+                componentsOfType.end()
+            );
 
-                componentsOfType.erase(compIt);
+            componentsOfOwner.erase(
+                std::remove(componentsOfOwner.begin(), componentsOfOwner.end(), casted),
+                componentsOfOwner.end()
+            );
 
-                return true;
-            }
+            return true;
         }
 
         return false;
@@ -96,8 +101,8 @@ public:
 private:
     ComponentManager() = default;
 
-    // guarda pointers a componentes
-    std::unordered_map<size_t, std::vector<std::unique_ptr<Component>>> components;
-    // relaciona cada GameObject con uno de los componentes
-    std::unordered_map<GameObject*, std::vector<Component*>> componentsOwners;
+    // Agrupa componentes del mismo tipo
+    std::unordered_map<std::type_index, std::vector<Component*>> typeMap;
+    // Agrupa componentes por GameObject
+    std::unordered_map<GameObject*, std::vector<Component*>> ownerComponentList;
 };

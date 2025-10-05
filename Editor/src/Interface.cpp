@@ -10,6 +10,8 @@
 
 #include "SceneManager.h"
 #include "GameObject.h"
+#include "GameObject.inl"
+#include "ComponentRegistry.h"
 
 #include "Components/Transform.h"
 
@@ -18,6 +20,13 @@ static DockLayout layout;
 static SceneManager& sceneManager = SceneManager::GetInstance();
 
 static bool firstTime = true;
+
+class Jugador : public Component {
+public:
+    Jugador(GameObject* owner) : Component(owner) {}
+
+    int vida = 100;
+};
 
 void ShowInterface() {
     if (firstTime) {
@@ -34,6 +43,13 @@ void ShowInterface() {
 
         cubo2.AddChild(cubo1);
         cubo3.AddChild(cubo1);
+
+        ComponentRegistry::Register("Jugador", [](GameObject* owner) {
+            return std::make_unique<Jugador>(owner);
+        });
+
+        std::unique_ptr<Component> componenteJugador = ComponentRegistry::Create("Jugador", &cubo3);
+        cubo3.AddComponent(std::move(componenteJugador));
 
         firstTime = false;
     }

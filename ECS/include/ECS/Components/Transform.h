@@ -17,8 +17,8 @@ public:
 
     int x, y, z;
 
-    Transform(GameObject* parent)
-        : Component(parent), position(0.0f), rotation(0.0f), scale(0.0f) {
+    Transform(GameObject* owner)
+        : Component(owner), position(0.0f), rotation(0.0f), scale(0.0f) {
             SerializeField("x", x);
             SerializeField("y", y);
             SerializeField("z", z);

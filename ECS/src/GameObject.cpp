@@ -1,5 +1,7 @@
 #include "GameObject.h"
+#include "GameObject.inl"
 #include "Components/Transform.h"
+#include "ComponentManager.h"
 
 unsigned int GameObject::s_NextID = 0;
 
@@ -57,12 +59,24 @@ void GameObject::AddChild(GameObject &child)
     m_Childs.push_back(&child);
 }
 
+const std::vector<Component*>& GameObject::GetComponents()
+{
+    return ComponentManager::GetInstance().GetComponents(this);
+}
+
+Component *GameObject::AddComponent(std::unique_ptr<Component> component)
+{
+    Component* raw = component.get();
+    m_Components.push_back(std::move(component));
+    ComponentManager::GetInstance().RegisterComponent(this, raw);
+    return raw;
+}
+
 std::ostream &operator<<(std::ostream &os, const GameObject &obj)
 {
     os << "Name: " << obj.GetName() <<
         "\nID: " << obj.GetID() <<
         "\nParent: " << (obj.GetParent() ? obj.GetParent()->GetName() : "null") <<
-        "\nnChilds: " << obj.GetChilds().size() <<
-        "\nnComponents: " << obj.GetComponents().size() << std::endl;
+        "\nnChilds: " << obj.GetChilds().size() << std::endl;
     return os;
 }

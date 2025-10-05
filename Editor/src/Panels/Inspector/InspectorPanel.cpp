@@ -4,6 +4,7 @@
 #include "Colors.h"
 #include "Themes.h"
 #include "GameObject.h"
+#include "GameObject.inl"
 #include "SerializedField.h"
 
 const std::string ToTag(const std::string& name) {

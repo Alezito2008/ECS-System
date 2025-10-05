@@ -5,10 +5,10 @@
 #include <iostream>
 #include <algorithm>
 
-#include "Component.h"
+// #include "Component.h"
 #include "Components/Transform.h"
-#include "ComponentManager.h"
 
+class Component;
 class Transform;
 
 class GameObject {
@@ -34,11 +34,12 @@ class GameObject {
         GameObject* FindChild(const unsigned int index) const;
         void AddChild(GameObject& child);
         
-        inline const std::vector<Component*>& GetComponents() const { return ComponentManager::GetInstance().GetComponents(this); }
+        const std::vector<Component*>& GetComponents();
 
         template <typename T> T* FindComponent();
         template <typename T> bool RemoveComponent();
-        template <typename T> T* AddComponent();  
+        template <typename T> T* AddComponent(); 
+        Component* AddComponent(std::unique_ptr<Component> component);
     private:
         unsigned int m_ID;
         static unsigned int s_NextID;
@@ -57,5 +58,3 @@ public:
 };
 
 std::ostream& operator<<(std::ostream& os, const GameObject& obj);
-
-#include "GameObject.inl"

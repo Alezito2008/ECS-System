@@ -6,6 +6,7 @@ project(ECS CXX)
 add_library(ECS STATIC
     src/GameObject.cpp
     src/Component.cpp
+    src/ComponentRegistry.cpp
     src/Scene.cpp
     src/SceneManager.cpp
     src/Components/Transform.cpp
