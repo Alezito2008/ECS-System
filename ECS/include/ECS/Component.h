@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+#define SERIALIZED_FIELD(var) SerializeField(#var, var);
+
 class GameObject;
 
 class Component {

@@ -23,9 +23,16 @@ static bool firstTime = true;
 
 class Jugador : public Component {
 public:
-    Jugador(GameObject* owner) : Component(owner) {}
-
     int vida = 100;
+
+    Jugador(GameObject* owner) : Component(owner) {
+        SERIALIZED_FIELD(vida);
+    }
+
+    const std::string& GetName() const override {
+        static const std::string name = "Jugador";
+        return name; 
+    }
 };
 
 void ShowInterface() {

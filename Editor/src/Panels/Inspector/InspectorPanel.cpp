@@ -56,17 +56,18 @@ void RenderObjectInfo(GameObject* obj) {
 void RenderComponent(Component* comp) {
     using namespace ImGui;
 
+    Dummy(ImVec2(0, 2.5f));
     PushFont(Fonts::MainFontBold, 16.0f);
     Text(comp->GetName().c_str());
-    Dummy(ImVec2(0, 5.0f));
-    Separator();
     PopFont();
     PushFont(Fonts::ConsoleFont, 16.0f);
     for (ISerializedField* field : comp->GetSerializedFields()) {
-        Dummy(ImVec2(0, 5.0f));
+        Dummy(ImVec2(0, 2.5f));
         DrawSerializedField(field);
     }
     PopFont();
+    Dummy(ImVec2(0, 2.5f));
+    Separator();
 }
 
 void InspectorPanel::Render() {
