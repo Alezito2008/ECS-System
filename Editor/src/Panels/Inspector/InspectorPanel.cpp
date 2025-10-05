@@ -12,11 +12,11 @@ const std::string ToTag(const std::string& name) {
     return "###" + name + "_field";
 } 
 
-static void DrawSerializedField(ISerializedField* field, bool enabled) {
+static void DrawSerializedField(ISerializedField* field, bool isEnabled) {
     using namespace ImGui;
     const char* name = field->GetName();
 
-    if (!enabled) BeginDisabled();
+    if (!isEnabled) BeginDisabled();
 
     if (field->GetType() == typeid(int)) {
         int* value = static_cast<int*>(field->GetPtr());
@@ -26,17 +26,20 @@ static void DrawSerializedField(ISerializedField* field, bool enabled) {
         InputInt(ToTag(name).c_str(), value);
     }
 
-    if (!enabled) EndDisabled();
+    if (!isEnabled) EndDisabled();
 }
 
-void RenderObjectInfo(GameObject* obj) {
+void RenderObjectInfo(GameObject* obj, bool isActive) {
     using namespace ImGui;
 
     const std::string name = " " + obj->GetName();
 
     PushFont(Fonts::MainFontBold, 16.0f);
+    // Titulo
     Checkbox(name.c_str(), obj->GetActivePtr());
     PopFont();
+
+    if (!isActive) ImGui::BeginDisabled();
 
     SeparatorText("Properties");
 
@@ -68,9 +71,8 @@ void RenderComponent(Component* comp) {
 
     Dummy(ImVec2(0, 2.5f));
     PushFont(Fonts::MainFontBold, 16.0f);
-    // Checkbox activado
-    Checkbox(name.c_str(), comp->GetActivePtr());
     // Titulo
+    Checkbox(name.c_str(), comp->GetActivePtr());
     PopFont();
 
     PushFont(Fonts::ConsoleFont, 16.0f);
@@ -90,8 +92,6 @@ void AddComponentModal() {
 
     Dummy(ImVec2(0, 2.5f));
     
-    float spaceX = GetContentRegionAvail().x;
-
     if (Button(" + Add Component", ImVec2(-FLT_MIN, 0))) ComponentSelectorPopup::Open();
 
     ComponentSelectorPopup::Render();
@@ -105,13 +105,16 @@ void InspectorPanel::Render() {
     GameObject* obj = Selection::selected;
 
     if (obj) {
-        RenderObjectInfo(obj);
+        const bool isActive = obj->IsActive();
+        
+        RenderObjectInfo(obj, isActive);
         
         for (auto& comp : obj->GetComponents()) {
             RenderComponent(comp);
         }
 
         AddComponentModal();
+        if (!isActive) ImGui::EndDisabled();
     } else {
         // Cuando no hay nada seleccionado
         constexpr const char* text = "No Game Object selected";
