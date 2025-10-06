@@ -58,6 +58,8 @@ void ShowInterface() {
         std::unique_ptr<Component> componenteJugador = ComponentRegistry::Create("Jugador", &cubo3);
         cubo3.AddComponent(std::move(componenteJugador));
 
+        ComponentRegistry::LoadLibrary("build/Components/libComponents.so");
+
         firstTime = false;
     }
 

@@ -9,3 +9,4 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_subdirectory(ECS)
 add_subdirectory(Editor)
+add_subdirectory(Components)
