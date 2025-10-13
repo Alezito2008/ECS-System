@@ -1,4 +1,1 @@
-#include "TestComponent.h"
-#include "ComponentRegistry.h"
-
-REGISTER_COMPONENT(TestComponent);
+#include "TestComponent/TestComponent.h"

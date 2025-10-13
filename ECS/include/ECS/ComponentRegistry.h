@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <string>
 
-#define REGISTER_COMPONENT(COMP) \
+/*#define REGISTER_COMPONENT(COMP) \
 namespace { \
     struct RegisterComponent_##COMP { \
         RegisterComponent_##COMP() { \
@@ -15,7 +15,7 @@ namespace { \
         } \
     }; \
     RegisterComponent_##COMP s_##COMP; \
-}
+}*/
 
 class ComponentRegistry {
 public:

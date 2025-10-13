@@ -1,5 +1,7 @@
 #pragma once
 #include "Component.h"
+#include "ComponentRegistry.h"
+#include "Register.h"
 
 class TestComponent : public Component {
 public:
@@ -14,3 +16,20 @@ public:
         return name; 
     };
 };
+
+class TestComponent3 : public Component {
+public:
+    int velocidad = 100;
+
+    TestComponent3(GameObject* owner) : Component(owner) {
+        SERIALIZED_FIELD(velocidad);
+    }
+
+    inline const std::string& GetName() const override {
+        static const std::string name = "TestComponent pero 2";
+        return name; 
+    };
+};
+
+REGISTER_COMPONENT(TestComponent);
+REGISTER_COMPONENT(TestComponent3);

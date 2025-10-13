@@ -29,7 +29,7 @@ static void DrawSerializedField(ISerializedField* field, bool isEnabled) {
     if (!isEnabled) EndDisabled();
 }
 
-void RenderObjectInfo(GameObject* obj, bool isActive) {
+static void RenderObjectInfo(GameObject* obj, bool isActive) {
     using namespace ImGui;
 
     const std::string name = " " + obj->GetName();
@@ -57,11 +57,9 @@ void RenderObjectInfo(GameObject* obj, bool isActive) {
     PopFont();
 
     Dummy(ImVec2(0, 5.0f));
-
-    SeparatorText("Components");
 }
 
-void RenderComponent(Component* comp) {
+static void RenderComponent(Component* comp) {
     using namespace ImGui;
 
     const std::string name = " " + comp->GetName();
@@ -87,13 +85,17 @@ void RenderComponent(Component* comp) {
     Separator();
 }
 
-void AddComponentModal() {
+static void ComponentSection(GameObject* obj) {
     using namespace ImGui;
 
-    Dummy(ImVec2(0, 2.5f));
-    
-    if (Button(" + Add Component", ImVec2(-FLT_MIN, 0))) ComponentSelectorPopup::Open();
+    SeparatorText("Components");
 
+    for (auto& comp : obj->GetComponents()) {
+        RenderComponent(comp);
+    }
+
+    Dummy(ImVec2(0, 2.5f));
+    if (Button(" + Add Component", ImVec2(-FLT_MIN, 0))) ComponentSelectorPopup::Open();
     ComponentSelectorPopup::Render();
 }
 
@@ -109,11 +111,8 @@ void InspectorPanel::Render() {
         
         RenderObjectInfo(obj, isActive);
         
-        for (auto& comp : obj->GetComponents()) {
-            RenderComponent(comp);
-        }
+        ComponentSection(obj);
 
-        AddComponentModal();
         if (!isActive) ImGui::EndDisabled();
     } else {
         // Cuando no hay nada seleccionado

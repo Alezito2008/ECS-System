@@ -1,4 +1,5 @@
 #include "ComponentSelector/ComponentSelectorPopup.h"
+#include "IconFont/IconsFontAwesome7.h"
 #include "imgui.h"
 #include "ComponentRegistry.h"
 #include "Themes.h"
@@ -18,8 +19,14 @@ void ComponentSelectorPopup::Render() {
 
     if (BeginPopup("Select Component ###component-selector")) {
         PushFont(Fonts::MainFontBold, 16.0f);
+        AlignTextToFramePadding();
         Text("Select Component");
         PopFont();
+        SameLine();
+        // Boton recargar
+        if (Button(ICON_FA_ROTATE_RIGHT)) {
+            ComponentRegistry::LoadLibrary("build/Components/libComponents.so");
+        };
         Separator();
         
         Spacing();
